@@ -78,7 +78,7 @@ app.delete("/remove/:id", async (req, res) => {
 app.put("/update/:id", async (req, res) => {
     try {
        await Album.findByIdAndUpdate(req.params.id, req.body)
-       res.send('Success updating')
+       res.redirect(`/show/${req.params.id}`)
     } catch (error) {
         res.send(error)
     }
@@ -98,7 +98,7 @@ app.get('/edit/:id', async (req, res) => {
     try {
        const foundAlbum = await Album.findById(req.params.id)
        res.render("edit.ejs", {
-        album: foundAlbum
+        data: foundAlbum
        })
     } catch (error) {
         res.send(error)

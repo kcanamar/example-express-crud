@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDIT</title>
+</head>
+<body>
+    <main>
+        <%- include('../views/partials/nav.ejs') %>
+        <h1>Edit <%= data.title %></h1>
+        <form action="/update/<%= data._id %>?_method=PUT" method="post">
+            <fieldset>
+                <legend>Album Details</legend>
+
+                <label for="title">Title</label>
+                <input id="title" type="text" name="title" value="<%= data.title %>">
+
+                <label for="year">Year</label>
+                <input type="number" name="year" id="year" value="<%= data.year %>">
+            </fieldset>
+
+            <fieldset>
+                <legend>Track List</legend>
+
+                <% data.tracks.forEach((track, index) => { %>
+                    <label for="track_<%= index++ %>">Track <%= index %></label>
+                    <input type="text" name="tracks" value="<%= track %>">
+                <% }) %>
+            </fieldset>
+
+            <input type="submit" value="Update">
+        </form>
+    </main>
+</body>
+</html>
