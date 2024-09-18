@@ -60,6 +60,15 @@ app.get('/index', async (req, res) => {
     }
 })
 
+app.delete("/remove/:id", async (req, res) => {
+    try {
+        await Album.findByIdAndDelete(req.params.id)
+        res.send('Album removed')
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 app.post("/", async (req, res) => {
      try {
         console.log(req.body)
