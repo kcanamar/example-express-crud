@@ -42,7 +42,7 @@ const Album = model("Album", albumSchema);
 //////////////////////////
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true})); // expresses built in body parser x-www-form-urlencoded
-
+app.use(methodOverride('_method')) // allows us to override the http method Post with Update or Delete
 //////////////////////////
 // Declare Routes 
 //////////////////////////
@@ -69,7 +69,7 @@ app.get("/new", (req, res) => {
 app.delete("/remove/:id", async (req, res) => {
     try {
         await Album.findByIdAndDelete(req.params.id)
-        res.send('Album removed')
+        res.redirect('/index')
     } catch (error) {
         res.send(error)
     }
@@ -109,8 +109,9 @@ app.get('/show/:id', async (req, res) => {
     try {
     //    const album = await Album.findById({ _id: req.params.id })
        const album = await Album.findById(req.params.id)
-       console.log(album)
-       res.send(album)
+       res.render('show.ejs', {
+         data: album
+       })
     } catch (error) {
         res.send(error)
     }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOW</title>
+</head>
+<body>
+    <main>
+        <%- include('../views/partials/nav.ejs') %>
+        <h1><%= data.title %></h1>
+        <h2><%= data.year %></h2>
+
+        <div>
+            <% data.tracks.forEach((track) => { %>
+                <div><%= track %></div>
+            <% }) %> 
+        </div>
+
+        <div>
+            <a href="/edit/<%= data._id %>">
+                <button>Edit</button>
+            </a>
+            <form action="/remove/<%= data._id %>?_method=DELETE" method="post">
+                <input type="submit" value="Delete">
+            </form>
+        </div>
+    </main>
+</body>
+</html>
