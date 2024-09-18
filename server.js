@@ -21,18 +21,65 @@ db.on('error', (err) => console.log(err.message + "yeah.. that didn't work"))
 db.on('connected', () => console.log(`Mongoose Connected`))
 db.on('disconnected', () => console.log('mongoose disconnected'))
 
+// Destructure Model components from mongoose
+const { Schema, model } = mongoose;
+
+const albumSchema = new Schema(
+    {
+        title: String,
+        year: Number,
+        tracks: [String]
+    },
+    {
+        timestamps: true
+    }
+)
+
+const Album = model("Album", albumSchema);
+
 //////////////////////////
 // Declare Middleware
 //////////////////////////
 app.use(morgan('dev'));
+app.use(express.urlencoded({extended: true})); // expresses built in body parser x-www-form-urlencoded
 
 //////////////////////////
 // Declare Routes 
 //////////////////////////
+// INDUCES 
 app.get("/", (req, res) => {
     res.send('ET phone Me.')
 })
 
+app.get('/index', async (req, res) => {
+    try {
+        const albums = await Album.find({})
+        res.send(albums)
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+app.post("/", async (req, res) => {
+     try {
+        console.log(req.body)
+        await Album.create(req.body)
+        res.send('Album creation success')
+     } catch (error) {
+        res.send('There was an error creating an album')
+     }
+})
+
+app.get('/show/:id', async (req, res) => {
+    try {
+    //    const album = await Album.findById({ _id: req.params.id })
+       const album = await Album.findById(req.params.id)
+       console.log(album)
+       res.send(album)
+    } catch (error) {
+        res.send(error)
+    }
+})
 //////////////////////////
 // Server Listener
 //////////////////////////
