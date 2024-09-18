@@ -9,7 +9,7 @@
     <main>
         <%- include('../views/partials/nav.ejs') %>
         <h1>Edit <%= data.title %></h1>
-        <form action="/update/<%= data._id %>?_method=PUT" method="post">
+        <form action="/album/update/<%= data._id %>?_method=PUT" method="post">
             <fieldset>
                 <legend>Album Details</legend>
 
