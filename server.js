@@ -54,10 +54,16 @@ app.get("/", (req, res) => {
 app.get('/index', async (req, res) => {
     try {
         const albums = await Album.find({})
-        res.send(albums)
+        res.render('index.ejs', {
+            data: albums
+        })
     } catch (error) {
         res.send(error)
     }
+})
+
+app.get("/new", (req, res) => {
+    res.render('new.ejs')
 })
 
 app.delete("/remove/:id", async (req, res) => {
@@ -82,10 +88,21 @@ app.post("/", async (req, res) => {
      try {
         console.log(req.body)
         await Album.create(req.body)
-        res.send('Album creation success')
+        res.redirect('/index')
      } catch (error) {
         res.send('There was an error creating an album')
      }
+})
+
+app.get('/edit/:id', async (req, res) => {
+    try {
+       const foundAlbum = await Album.findById(req.params.id)
+       res.render("edit.ejs", {
+        album: foundAlbum
+       })
+    } catch (error) {
+        res.send(error)
+    }
 })
 
 app.get('/show/:id', async (req, res) => {

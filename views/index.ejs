@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDEX</title>
+</head>
+<body>
+    <main>
+        <%- include('../views/partials/nav.ejs') %>
+        <h1>INDEX</h1>
+
+        <% data.forEach(({ title, year, tracks, _id }) => { %>
+            <div>
+                <h2><%= title %></h2>
+                <p><%= year %></p>
+                <a href="/show/<%= _id %>">Show More</a>
+
+                <ul>
+                    <% tracks.forEach((track) => { %>
+                        <li><%= track %></li>
+                    <% }) %>
+                </ul>
+            </div>
+    
+        <% }) %>
+    </main>
+</body>
+</html>
