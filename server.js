@@ -69,6 +69,15 @@ app.delete("/remove/:id", async (req, res) => {
     }
 })
 
+app.put("/update/:id", async (req, res) => {
+    try {
+       await Album.findByIdAndUpdate(req.params.id, req.body)
+       res.send('Success updating')
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 app.post("/", async (req, res) => {
      try {
         console.log(req.body)
